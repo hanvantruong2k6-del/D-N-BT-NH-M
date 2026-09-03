@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-traversal.py
-------------
-Duyet do thi bang BFS va DFS - tu cai dat bang hang doi / ngan xep thu cong,
-KHONG dung ham duyet co san cua bat ky thu vien do thi nao.
-"""
 
 from collections import deque
 
