@@ -1,99 +1,116 @@
+# -*- coding: utf-8 -*-
+"""
+traversal.py
+------------
+Duyet do thi bang BFS va DFS - tu cai dat bang hang doi / ngan xep thu cong,
+KHONG dung ham duyet co san cua bat ky thu vien do thi nao.
+"""
+
 from collections import deque
 
 
-class GraphTraversal:
+def bfs(graph, start):
+    """
+    Breadth-First Search tu dinh 'start'.
+    Tra ve:
+      order      : thu tu cac dinh duoc THAM (visit) - danh cho doi chieu bai lam tay
+      parent     : dict dinh -> dinh cha trong cay BFS (None neu la goc/khong toi duoc)
+      distance   : dict dinh -> so canh (khong trong so) tu start toi dinh do
+      tree_edges : danh sach canh (u, v) thuoc cay BFS
+    """
+    if not graph.has_vertex(start):
+        raise ValueError(f"Dinh '{start}' khong ton tai trong do thi")
 
-    def __init__(self, graph):
-        self.graph = graph
+    visited = {start}
+    order = [start]
+    parent = {start: None}
+    distance = {start: 0}
+    tree_edges = []
 
-    # =========================
-    # BFS
-    # =========================
-    def bfs(self, start):
-        visited = [False] * self.graph.n
-        result = []
+    queue = deque([start])
+    while queue:
+        u = queue.popleft()
+        # duyet lang gieng theo thu tu duoc luu (deterministic) de de doi chieu tay
+        for v, _w in graph.neighbors(u):
+            if v not in visited:
+                visited.add(v)
+                parent[v] = u
+                distance[v] = distance[u] + 1
+                tree_edges.append((u, v))
+                order.append(v)
+                queue.append(v)
 
-        queue = deque()
-
-        start -= 1
-
-        if start < 0 or start >= self.graph.n:
-            print("Đỉnh bắt đầu không hợp lệ!")
-            return []
-
-        visited[start] = True
-        queue.append(start)
-
-        while queue:
-            u = queue.popleft()
-
-            result.append(u + 1)
-
-            for v, w in self.graph.adj_list[u]:
-
-                if not visited[v]:
-                    visited[v] = True
-                    queue.append(v)
-
-        return result
-
-    # =========================
-    # DFS
-    # =========================
-    def dfs(self, start):
-        visited = [False] * self.graph.n
-        result = []
-
-        start -= 1
-
-        if start < 0 or start >= self.graph.n:
-            print("Đỉnh bắt đầu không hợp lệ!")
-            return []
-
-        self._dfs(start, visited, result)
-
-        return result
-
-    def _dfs(self, u, visited, result):
-
-        visited[u] = True
-        result.append(u + 1)
-
-        for v, w in self.graph.adj_list[u]:
-
-            if not visited[v]:
-                self._dfs(v, visited, result)
+    return {
+        "order": order,
+        "parent": parent,
+        "distance": distance,
+        "tree_edges": tree_edges,
+    }
 
 
-# =====================================
-# CHẠY THỬ
-# =====================================
+def dfs(graph, start):
+    """
+    Depth-First Search tu dinh 'start' (cai dat kieu lap - iterative - de tranh
+    gioi han do sau de quy, nhung mo phong dung thu tu de quy chuan).
+    Tra ve:
+      order        : thu tu THAM cac dinh (tien tu - preorder)
+      parent       : dict dinh -> dinh cha trong cay/rung DFS
+      discovery    : dict dinh -> thoi diem phat hien (tick)
+      finish       : dict dinh -> thoi diem hoan tat (tick)
+      tree_edges   : danh sach canh cay DFS
+      back_edges   : danh sach canh nguoc (bao chu trinh) phat hien duoc
+    """
+    if not graph.has_vertex(start):
+        raise ValueError(f"Dinh '{start}' khong ton tai trong do thi")
 
-if __name__ == "__main__":
+    visited = set()
+    order = []
+    parent = {start: None}
+    discovery = {}
+    finish = {}
+    tree_edges = []
+    back_edges = []
+    on_stack = set()
+    time_counter = [0]
 
-    # Import Graph từ graph.py
-    from graph import Graph
+    def visit(u):
+        time_counter[0] += 1
+        discovery[u] = time_counter[0]
+        visited.add(u)
+        on_stack.add(u)
+        order.append(u)
+        for v, _w in graph.neighbors(u):
+            if v not in visited:
+                parent[v] = u
+                tree_edges.append((u, v))
+                visit(v)
+            elif v in on_stack and v != parent.get(u):
+                # canh nguoc (huong ve to tien dang xu ly) => chu trinh
+                if (u, v) not in back_edges and (v, u) not in back_edges:
+                    back_edges.append((u, v))
+        on_stack.discard(u)
+        time_counter[0] += 1
+        finish[u] = time_counter[0]
 
-    # Tạo đồ thị vô hướng 5 đỉnh
-    g = Graph(5, directed=False)
+    visit(start)
 
-    g.add_edge(1, 2)
-    g.add_edge(1, 3)
-    g.add_edge(2, 4)
-    g.add_edge(2, 5)
-    g.add_edge(3, 5)
+    return {
+        "order": order,
+        "parent": parent,
+        "discovery": discovery,
+        "finish": finish,
+        "tree_edges": tree_edges,
+        "back_edges": back_edges,
+    }
 
-    # Tạo đối tượng Traversal
-    traversal = GraphTraversal(g)
 
-    # BFS
-    print("===== TRAVERSAL =====")
-
-    bfs_result = traversal.bfs(1)
-
-    print("BFS:", " -> ".join(map(str, bfs_result)))
-
-    # DFS
-    dfs_result = traversal.dfs(1)
-
-    print("DFS:", " -> ".join(map(str, dfs_result)))
+def connected_components_undirected(graph):
+    """Tim cac thanh phan lien thong (danh cho do thi vo huong) bang BFS lap lai."""
+    visited = set()
+    components = []
+    for v in graph.vertices():
+        if v not in visited:
+            comp = bfs(graph, v)["order"]
+            visited.update(comp)
+            components.append(comp)
+    return components
