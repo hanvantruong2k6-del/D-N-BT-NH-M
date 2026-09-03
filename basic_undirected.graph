@@ -1,0 +1,12 @@
+# Do thi vo huong don gian - dung cho: bieu dien do thi, BFS, DFS
+DIRECTED: no
+WEIGHTED: no
+VERTICES: A,B,C,D,E,F
+EDGES:
+A B
+A C
+B D
+C D
+D E
+E F
+C F
