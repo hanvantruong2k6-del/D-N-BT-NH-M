@@ -1,0 +1,10 @@
+# Do thi KHONG hai phia: chua chu trinh le (tam giac A-B-C)
+DIRECTED: no
+WEIGHTED: no
+VERTICES: A,B,C,D,E
+EDGES:
+A B
+B C
+C A
+C D
+D E
