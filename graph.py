@@ -1,26 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-graph.py
---------
-Cau truc du lieu Graph tu xay dung (KHONG dung networkx/igraph cho thuat toan).
-Ho tro:
-  - Do thi vo huong / co huong
-  - Do thi co trong so / khong trong so
-  - Chuyen doi qua lai 3 cach bieu dien: Adjacency List <-> Adjacency Matrix <-> Edge List
-  - Doc do thi tu file dinh dang van ban don gian (tu dinh nghia, khong dung parser cua thu vien do thi)
-
-Dinh dang file mau (.graph):
-    # dong bat dau bang '#' la comment
-    DIRECTED: yes|no
-    WEIGHTED: yes|no
-    VERTICES: A,B,C,D,E
-    EDGES:
-    A B 4
-    B C 2
-    ...
-Neu WEIGHTED: no thi cot trong so co the bo qua (mac dinh = 1)
-"""
-
 from collections import OrderedDict
 
 
