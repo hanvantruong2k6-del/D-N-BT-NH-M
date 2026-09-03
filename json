@@ -1,0 +1,47 @@
+{
+    "workbench.colorTheme": "Dracula Theme",
+    "workbench.iconTheme": "material-icon-theme",
+
+    "python.defaultInterpreterPath": "C:\\Users\\LENOVO\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+
+    "files.autoSave": "onWindowChange",
+    "files.autoSaveWhenNoErrors": true,
+
+    "jupyter.interactiveWindow.splitRunFileIntoCells": false,
+    "interactiveWindow.alwaysScrollOnNewCell": false,
+    "interactiveWindow.showExecutionHint": false,
+    "jupyter.interactiveWindow.codeLens.enable": false,
+    "jupyter.interactiveWindow.codeLens.enableGotoCell": false,
+    "jupyter.interactiveWindow.textEditor.autoAddNewCell": false,
+    "jupyter.interactiveWindow.textEditor.autoMoveToNextCell": false,
+    "jupyter.interactiveWindow.textEditor.cellFolding": false,
+
+    "security.workspace.trust.untrustedFiles": "open",
+
+    "bracket-pair-colorizer-2.depreciation-notice": false,
+    "workbench.editor.enablePreview": false,
+
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.saveFileBeforeRun": true,
+    "code-runner.runInTerminal": true,
+
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": "C:\\WINDOWS\\System32\\cmd.exe",
+            "args": []
+        },
+        "Git Bash": {
+            "source": "Git Bash",
+            "icon": "terminal-git-bash"
+        }
+    },
+
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false
+}
