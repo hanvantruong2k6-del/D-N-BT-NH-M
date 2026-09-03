@@ -1,0 +1,11 @@
+# Do thi hai phia (bipartite): tap {A,B,C} - tap {X,Y,Z}
+DIRECTED: no
+WEIGHTED: no
+VERTICES: A,B,C,X,Y,Z
+EDGES:
+A X
+A Y
+B Y
+B Z
+C X
+C Z
